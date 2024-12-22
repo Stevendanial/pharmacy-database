@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pharmacy Database</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <h1>Pharmacy Information</h1>
+
+  <!-- Pharmacies Table -->
+  <h2>Pharmacies</h2>
+  <table border="1">
+    <thead>
+      <tr>
+        <th>Pharmacy ID</th>
+        <th>Name</th>
+        <th>Location</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% pharmacyData.forEach(pharmacy => { %>
+        <tr>
+          <td><%= pharmacy.PharmacyID %></td>
+          <td><%= pharmacy.Name %></td>
+          <td><%= pharmacy.Location %></td>
+          <td>
+            <form action="/delete-pharmacy/<%= pharmacy.PharmacyID %>" method="POST">
+              <button type="submit">Delete</button>
+            </form>
+          </td>
+        </tr>
+      <% }); %>
+    </tbody>
+  </table>
+
+  <!-- Add Pharmacy Form -->
+  <h3>Add New Pharmacy</h3>
+  <form action="/add-pharmacy" method="POST">
+    <input type="text" name="name" placeholder="Pharmacy Name" required>
+    <input type="text" name="location" placeholder="Location" required>
+    <button type="submit">Add Pharmacy</button>
+  </form>
+
+  <!-- Medications Table -->
+  <h2>Medications</h2>
+  <table border="1">
+    <thead>
+      <tr>
+        <th>Medication ID</th>
+        <th>Name</th>
+        <th>Description</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% medicationsData.forEach(medication => { %>
+        <tr>
+          <td><%= medication.MedicationID %></td>
+          <td><%= medication.Name %></td>
+          <td><%= medication.Description %></td>
+          <td>
+            <form action="/delete-medication/<%= medication.MedicationID %>" method="POST">
+              <button type="submit">Delete</button>
+            </form>
+          </td>
+        </tr>
+      <% }); %>
+    </tbody>
+  </table>
+
+  <!-- Add Medication Form -->
+  <h3>Add New Medication</h3>
+  <form action="/add-medication" method="POST">
+    <input type="text" name="name" placeholder="Medication Name" required>
+    <input type="text" name="description" placeholder="Description" required>
+    <button type="submit">Add Medication</button>
+  </form>
+
+  <!-- Staff Table -->
+  <h2>Staff</h2>
+  <table border="1">
+    <thead>
+      <tr>
+        <th>Staff ID</th>
+        <th>Full Name</th>
+        <th>Role</th>
+        <th>Phone Number</th>
+        <th>Pharmacy ID</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% staffData.forEach(staff => { %>
+        <tr>
+          <td><%= staff.StaffID %></td>
+          <td><%= staff.FullName %></td>
+          <td><%= staff.Role %></td>
+          <td><%= staff.PhoneNumber %></td>
+          <td><%= staff.PharmacyID %></td>
+          <td>
+            <form action="/delete-staff/<%= staff.StaffID %>" method="POST">
+              <button type="submit">Delete</button>
+            </form>
+          </td>
+        </tr>
+      <% }); %>
+    </tbody>
+  </table>
+
+  <!-- Add Staff Form -->
+  <h3>Add New Staff</h3>
+  <form action="/add-staff" method="POST">
+    <input type="text" name="fullName" placeholder="Full Name" required>
+    <input type="text" name="role" placeholder="Role" required>
+    <input type="text" name="phoneNumber" placeholder="Phone Number" required>
+    <input type="number" name="pharmacyId" placeholder="Pharmacy ID" required>
+    <button type="submit">Add Staff</button>
+  </form>
+
+  <!-- Patients Table -->
+  <h2>Patients</h2>
+  <table border="1">
+    <thead>
+      <tr>
+        <th>Patient ID</th>
+        <th>Full Name</th>
+        <th>Date of Birth</th>
+        <th>Gender</th>
+        <th>Address</th>
+        <th>Phone Number</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% patientsData.forEach(patient => { %>
+        <tr>
+          <td><%= patient.PatientID %></td>
+          <td><%= patient.FullName %></td>
+          <td><%= patient.DateOfBirth %></td>
+          <td><%= patient.Gender %></td>
+          <td><%= patient.Address %></td>
+          <td><%= patient.PhoneNumber %></td>
+          <td>
+            <form action="/delete-patient/<%= patient.PatientID %>" method="POST">
+              <button type="submit">Delete</button>
+            </form>
+          </td>
+        </tr>
+      <% }); %>
+    </tbody>
+  </table>
+
+  <!-- Add Patient Form -->
+  <h3>Add New Patient</h3>
+  <form action="/add-patient" method="POST">
+    <input type="text" name="fullName" placeholder="Full Name" required>
+    <input type="date" name="dateOfBirth" required>
+    <select name="gender" required>
+      <option value="Male">Male</option>
+      <option value="Female">Female</option>
+    </select>
+    <input type="text" name="address" placeholder="Address" required>
+    <input type="text" name="phoneNumber" placeholder="Phone Number" required>
+    <button type="submit">Add Patient</button>
+  </form>
+
+  <!-- Prescriptions Table -->
+  <h2>Prescriptions</h2>
+  <table border="1">
+    <thead>
+      <tr>
+        <th>Prescription ID</th>
+        <th>Patient ID</th>
+        <th>Medication ID</th>
+        <th>Prescription Date</th>
+        <th>Dosage</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% prescriptionsData.forEach(prescription => { %>
+        <tr>
+          <td><%= prescription.PrescriptionID %></td>
+          <td><%= prescription.PatientID %></td>
+          <td><%= prescription.MedicationID %></td>
+          <td><%= prescription.PrescriptionDate %></td>
+          <td><%= prescription.Dosage %></td>
+          <td>
+            <form action="/delete-prescription/<%= prescription.PrescriptionID %>" method="POST">
+              <button type="submit">Delete</button>
+            </form>
+          </td>
+        </tr>
+      <% }); %>
+    </tbody>
+  </table>
+
+  <!-- Add Prescription Form -->
+  <h3>Add New Prescription</h3>
+  <form action="/add-prescription" method="POST">
+    <input type="number" name="patientId" placeholder="Patient ID" required>
+    <input type="number" name="medicationId" placeholder="Medication ID" required>
+    <input type="date" name="prescriptionDate" required>
+    <input type="text" name="dosage" placeholder="Dosage" required>
+    <button type="submit">Add Prescription</button>
+  </form>
+
+  <!-- Billing Table -->
+  <h2>Billing</h2>
+  <table border="1">
+    <thead>
+      <tr>
+        <th>Bill ID</th>
+        <th>Patient ID</th>
+        <th>Total Amount</th>
+        <th>Payment Status</th>
+        <th>Billing Date</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% billingData.forEach(bill => { %>
+        <tr>
+          <td><%= bill.BillID %></td>
+          <td><%= bill.PatientID %></td>
+          <td><%= bill.TotalAmount %></td>
+          <td><%= bill.PaymentStatus %></td>
+          <td><%= bill.BillingDate %></td>
+          <td>
+            <form action="/delete-billing/<%= bill.BillID %>" method="POST">
+              <button type="submit">Delete</button>
+            </form>
+          </td>
+        </tr>
+      <% }); %>
+    </tbody>
+  </table>
+
+  <!-- Add Billing Form -->
+  <h3>Add New Billing</h3>
+  <form action="/add-billing" method="POST">
+    <input type="number" name="patientId" placeholder="Patient ID" required>
+    <input type="number" name="totalAmount" placeholder="Total Amount" required>
+    <select name="paymentStatus" required>
+      <option value="Paid">Paid</option>
+      <option value="Unpaid">Unpaid</option>
+    </select>
+    <input type="date" name="billingDate" required>
+    <button type="submit">Add Billing</button>
+  </form>
+
+</body>
+</html>
